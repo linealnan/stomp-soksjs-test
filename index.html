@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>Stomp Soksjs Test</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js" integrity="sha512-5yJ548VSnLflcRxWNqVWYeQZnby8D8fJTmYRLyvs445j1XmzR8cnWi85lcHx3CUEeAX+GrK3TqTfzOO6LKDpdw==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous"></script>
+        <script>    
+            var socket = new SockJS('https://eisao-dev.wavea.cc/ws/ws-notification');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                setConnected(true);
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/notifications/' + profileId, function (messageOutput) {
+                showMessageOutput(messageOutput.body);
+            });
+            // stompClient.subscribe('/topic/notification-unread-cnt/1', function (messageOutput) {
+            // showMessageOutput(messageOutput.body);
+            // });
+            // var id = stompClient.subscribe('/topic/notification/1', function (messageOutput) {
+            // showMessageOutput(messageOutput.body);
+            // });
+            // id.unsubscribe();
+            }, function (error) {
+                console.log(error);
+            });
+        </script>
+    </head>
+    <body>
+        <p>Hi! I'm debug page for stomp protocol! Open debug console your browser, please.</p>
+        <noscript>Пожалуйста включите поддержку JavaScript в браузере для продолжения использования приложения.</noscript>
+    </body>
+</html>
